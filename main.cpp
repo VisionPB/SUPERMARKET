@@ -50,49 +50,60 @@ float IDCheck() {
 				<< ", it costs: £" << itemPrice[ID] << endl;
 		return itemPrice[ID];
 	} else {
-		cerr << "YOU DID SOMETHING WRONG" << endl;
+		cerr << "Invalid ItemID, please try again." << endl;
 		return 0;
 	}
 
 }
 int main() {
-	string nextCustomer ="Y";
-	while(nextCustomer != "N")
-	{
 
+    bool nextCustomer = true;
+    while(nextCustomer) {
 
+        cout << "****************************************************" << endl;
+        cout << "*   WELCOME TO HERTS SUPERMARKET CHECKOUT SYSTEM   *" << endl;
+        cout << "* Scan the barcode or manually type the barcode ID *" << endl;
+        cout << "****************************************************" << endl;
+        itemList();
 
-	float totalPrice = 0;
-	cout << "****************************************************" << endl;
-	cout << "*   WELCOME TO HERTS SUPERMARKET CHECKOUT SYSTEM   *" << endl;
-	cout << "* Scan the barcode or manually type the barcode ID *" << endl;
-	cout << "****************************************************" << endl;
-	itemList();
+        float totalPrice = 0;
 
-	float price = IDCheck();
+        float price = IDCheck();
 
-	while (price != -1) {
-		totalPrice += price;
-		price = IDCheck();
+        while(price != -1) {
+            totalPrice += price;
+            price = IDCheck();
+        }
 
-	}
-	cout << "Your total is £" << totalPrice << endl;
+        cout << "Your total is £" << totalPrice << endl;
 
-	float change = -totalPrice;
+        float change = -totalPrice;
 
-	while (change < 0) {
-		float cash;
-		cout << "Cash required (£" << -change << "): ";
-		cin >> cash;
+        while(change < 0) {
+            float cash;
+            cout << "Cash required (£" << -change << "): ";
+            cin >> cash;
 
-		change += cash;
-	}
+            change += cash;
+        }
 
-	cout << "Thank you for your purchase. Change: £" << change;
-	cout << "Next Customer (Y/N)? ";
-	cin >> nextCustomer;
-	}
+        cout << "Thank you for your purchase. Change: £" << change << endl;
 
-	return 0;
+        string newCustomer;
+        while(true) {
+            cout << "Next Customer (Y/N)? ";
+            cin >> newCustomer;
+            newCustomer = tolower(newCustomer.at(0));
+            if(newCustomer.at(0) == 'y') {
+                nextCustomer = true;
+                cout << endl;
+                break;
+            } else if(newCustomer.at(0) == 'n') {
+                nextCustomer = false;
+                break;
+            }
+        }
+
+    }
+    return 0;
 }
-
